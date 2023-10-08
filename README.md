@@ -1,3 +1,12 @@
+# branch rule
+
+- feature/[NAME]/[ISUEE_NUM]-[TITLE]
+  - 機能の追加や変更などを行うブランチ，develop ブランチから派生
+  - ex) feature/dodo/1-create-view-env
+- fix/[NAME]/[ISUEE_NUM]-[TITLE]
+  - バグの修正などを行うブランチ，develop ブランチから派生
+  - ex) fix/dodo/2-fix-view-env
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
