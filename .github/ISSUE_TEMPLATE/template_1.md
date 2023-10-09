@@ -1,5 +1,5 @@
 ---
-name: template_1
+name: 汎用template
 about: 汎用issue
 title: "内容"
 labels: ""
