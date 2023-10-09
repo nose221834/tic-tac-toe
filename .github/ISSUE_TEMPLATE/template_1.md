@@ -1,10 +1,9 @@
 ---
-name: template_1
-about: General Template
-title: "[] 詳細"
-labels: ''
+name: 汎用template
+about: 汎用issue
+title: "内容"
+labels: ""
 assignees: nose221834
-
 ---
 
 # 概要
