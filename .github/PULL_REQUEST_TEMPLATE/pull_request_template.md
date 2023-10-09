@@ -1,10 +1,3 @@
----
-name: template_1
-about: General Template
-title: "[] 詳細"
-labels: ""
----
-
 # 対応 Issue
 
 <!-- 対応したIssue番号を記載 -->
