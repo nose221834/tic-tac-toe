@@ -7,6 +7,17 @@
   - バグの修正などを行うブランチ，develop ブランチから派生
   - ex) fix/dodo/2-fix-view-env
 
+# commit rule
+
+- コミットメッセージは issue 番号を載せる
+- コミットメッセージは行った開発を端的にわかりやすく書く（長すぎないように注意する）
+- コミットメッセージラベルを付ける
+  - [add] file or directory の追加
+  - [mod] file or directory の編集
+  - [fix] file or directory のバグや軽微な修正
+  - [del] file or directory の削除
+  - [otr] その他
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
