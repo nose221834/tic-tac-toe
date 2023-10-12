@@ -139,9 +139,6 @@ export default function Game() {
       <div className="game-info">
         <ol>{moves}</ol>
       </div>
-      <div className="test">
-        <Test testArray={history}/>
-      </div>
     </div>
   );
 }
@@ -167,11 +164,4 @@ function calculateWinner(squares) {
     }
   }
   return null;
-}
-
-function Test(testArray) {
-  return (
-    console.log(testArray),
-    console.log(testArray[0])
-  )
 }
