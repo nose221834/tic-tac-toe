@@ -1,41 +1,58 @@
+// useStateの読み込み
 import { useState } from "react";
 
 
+// Square 関数の定義（）
 function Square({ value,onSquareClick }) {
+  // 返り値の設定
   return (
     <button
       className="square"
+      // クリックされたら、`onSquareClick`を呼び出す
+      // ボタンの中には`value`が入っている
       onClick={onSquareClick}
     >
-      {value}
+      {value} 
     </button>
   );
 }
 
 
+// ボード関数の定義
 function Board({xIsNext, squares, onPlay }) {
+    // handleClickの定義
     function handleClick(i) {
+      // 選択したボタンが埋まっていたり、勝者がいる場合、何もせずに終わらせる
       if (squares[i] || calculateWinner(squares)) {
         return;
       }
+      // nextSquaresという名前の、squaresの複製を作成
       const nextSquares = squares.slice();
+      // もしもx IsNextがtrueならば、X,falseならばO
       if(xIsNext){
         nextSquares[i] = `X`;
       }else {
         nextSquares[i] = `O`;
       }
+      // onPlay=handleplay ,nextSquaresという引数でhandleplayが実行される
       onPlay(nextSquares);
   }
   
+  // winnerに、勝敗の結果を渡している（null,X,O）
   const winner = calculateWinner(squares);
+  // statusを宣言している。（letなので再代入可能）
   let status;
 
+  // 勝者がいるときと、いない時のstatusを決めている
   if (winner) {
     status = "Winner:" + winner;
   } else {
+    // xIsNextがtrueならX、falseならばO
     status = "Next player: " + (xIsNext ? "X" : "O");
   }
 
+  // stasusの表示、Squareを正方形に配置を行っている。
+  // Squareに対して、handleClickを渡している。（無限ループ対策でアローを使っている）
   return (
     <>
       <div className="status">{status}</div>
@@ -58,21 +75,43 @@ function Board({xIsNext, squares, onPlay }) {
   );
 }
 
+// 親コンポーネントを定義している。
+// この関数がbuildした時にindex.htmlに渡されるものになる
 export default function Game() {
-  const [xIsNext,setXIsNext] = useState(true);
+  // historyをuseStateで定義している。配列の中に配列を作成しているため、二次元配列
+  // [
+  //   [null, null, null, null, null, null, null, null, null]
+  // ]
   const [history, setHistory] = useState([Array(9).fill(null)]);
-  const currentSquares = history[history.length - 1];
+  // currentMoveを useStateを利用して定義している。
+  // この値は、今の動作が何番目なのかを表している。
+  const [currentMove,setCurrentMove] = useState(0);
+  // xIsNextを定義している。currentMoveが2で割り切れたらtrue,ダメならfalse
+  // これは、Xが偶数番、Oが奇数番であるためこのようにできる
+  const xIsNext = currentMove % 2 === 0;
+  // currentSquaresを定義している。historyのcurrentMoveの番号の配列を渡している
+  // 現在の配列をここで定義するため、常に一次元
+  const currentSquares = history[currentMove];
 
 
+  // 
   function handlePlay(nextSquares) {
-    setHistory([...history,nextSquares]);
-    setXIsNext(!xIsNext);
+    // nextHistoryを定義している
+    // ここで、次の配列を複製しつつ、次の状態を追加している（nectSquaresを連結！）
+    const nextHistory = [...history.slice(0,currentMove + 1),nextSquares];
+    // 次のhistoryに更新
+    setHistory(nextHistory)
+    //　現在のターン数に更新 
+    setCurrentMove(nextHistory.length - 1)
   }
 
+  // 指定したターンに戻るための関数
+  // useStateによってサイレンダリングしてマスを更新する。
   function jumpTo(nextMove) {
-
+    setCurrentMove(nextMove);
   }
 
+  // historyを参照し、history内の配列のindexをmoveで取得している
   const moves = history.map((squares,move) => {
     let description;
     if (move > 0) {
@@ -80,17 +119,18 @@ export default function Game() {
     }else {
     description = 'Go to game start';
     }
-    
+    // ここでは、keyという重要な項目を扱っている。
+    // reactは、サイレンダリングが行わレた時に、変更のあった部分だけを更新するようになっている。
+    // その時に、keyを指定しておけば最小限で済ませることができる
+    // ただ、indexをkeyにするのは非推奨らしい。
     return (
-      <li>
+      <li key={move}>
           <button onClick={() => jumpTo(move)}>{description}</button>
       </li>
     );
   });
 
-
-
-
+  // 土台のページを作成している。
   return (
     <div className="game">
       <div className="game-board">
@@ -99,11 +139,15 @@ export default function Game() {
       <div className="game-info">
         <ol>{moves}</ol>
       </div>
+      <div className="test">
+        <Test testArray={history}/>
+      </div>
     </div>
   );
 }
 
 
+// 勝者がいるかの判定を行う。いる場合、勝者が返り値として帰る。
 function calculateWinner(squares) {
   const lines = [
     [0, 1, 2],
@@ -125,4 +169,9 @@ function calculateWinner(squares) {
   return null;
 }
 
-
+function Test(testArray) {
+  return (
+    console.log(testArray),
+    console.log(testArray[0])
+  )
+}
