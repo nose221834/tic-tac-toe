@@ -1,10 +1,10 @@
 # branch rule
 
 - feature/[NAME]/[ISUEE_NUM]-[TITLE]
-  - 機能の追加や変更などを行うブランチ，develop ブランチから派生
+  - 機能の追加や変更などを行うブランチ，main ブランチから派生
   - ex) feature/dodo/1-create-view-env
 - fix/[NAME]/[ISUEE_NUM]-[TITLE]
-  - バグの修正などを行うブランチ，develop ブランチから派生
+  - バグの修正などを行うブランチ，main ブランチから派生
   - ex) fix/dodo/2-fix-view-env
 
 # commit rule
